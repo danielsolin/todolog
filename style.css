@@ -105,9 +105,26 @@ li button:hover {
 }
 
 .log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 8px;
     background-color: #f8f9fa;
     border-radius: 4px;
     margin-bottom: 5px;
     font-size: 14px;
+}
+
+.log-item button.undo-button {
+    background: none;
+    border: 1px solid #ffc107;
+    color: #ffc107;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.log-item button.undo-button:hover {
+    background: #ffc107;
+    color: #333;
 }

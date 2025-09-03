@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }
             acc[date].push(todo);
-            
+
             return acc;
 
         }, {});
@@ -73,7 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('log-item');
-                    itemDiv.textContent = todo.text;
+                    itemDiv.innerHTML = `
+                        <span>${todo.text}</span>
+                        <button class="undo-button" data-created="${todo.created}">Undo</button>
+                    `;
                     groupDiv.appendChild(itemDiv);
 
                 });
@@ -87,11 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
     todoForm.addEventListener('submit', (e) => {
 
         e.preventDefault();
+        
         const newTodoText = todoInput.value.trim();
         if (newTodoText) {
 
-            todos.push({ text: newTodoText, created: new Date(), completed: null });
+            todos.push({
+                text: newTodoText,
+                created: new Date().toISOString(),
+                completed: null
+            });
             todoInput.value = '';
+            
             saveTodos();
             renderTodos();
 
@@ -121,6 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
+    });
+
+    // Handle undoing todos
+    logContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('undo-button')) {
+            const todoCreated = e.target.dataset.created;
+            const todoToUndo = todos.find(t => t.created === todoCreated);
+            if (todoToUndo) {
+                todoToUndo.completed = null;
+                saveTodos();
+                renderTodos();
+            }
+        }
     });
 
     renderTodos();
