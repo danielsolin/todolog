@@ -96,6 +96,19 @@ li, .log-item {
     font-size: 0.8em;
 }
 
+#todo-list li::before, .log-item::before {
+    content: '>';
+    margin-right: 10px;
+}
+
+#todo-list li::before {
+    color: #007acc;
+}
+
+.log-item::before {
+    color: #28a745;
+}
+
 li:last-child {
     border-bottom: none;
 }
@@ -135,6 +148,11 @@ li button:hover {
     text-decoration: line-through;
 }
 
+.log-item-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 .log-item button.undo-button {
     border: 1px solid #ffc107;
     color: #ffc107;
@@ -143,4 +161,14 @@ li button:hover {
 .log-item button.undo-button:hover {
     background: #ffc107;
     color: #1e1e1e;
+}
+
+.log-item button.delete-button {
+    border: 1px solid #f44747;
+    color: #f44747;
+}
+
+.log-item button.delete-button:hover {
+    background: #f44747;
+    color: #fff;
 }
