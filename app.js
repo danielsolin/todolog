@@ -41,14 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Group and render completed todos
         const completedByDate = completedTodos.reduce((acc, todo) => {
 
-            const date = new Date(todo.completed).toLocaleDateString();
+            const d = new Date(todo.completed);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const date = `${year}-${month}-${day}`;
+
             if (!acc[date]) {
 
                 acc[date] = [];
 
             }
             acc[date].push(todo);
-
+            
             return acc;
 
         }, {});
@@ -119,5 +124,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderTodos();
-    
+
 });
