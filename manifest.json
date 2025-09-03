@@ -1,0 +1,16 @@
+{
+  "name": "Todolog",
+  "short_name": "Todolog",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5c67f2",
+  "description": "A simple todo app with completion logging.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

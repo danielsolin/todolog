@@ -15,9 +15,12 @@ side with no server needed.
 
 ## Getting Started
 
-There is no build process or installation required.
+To run this application, you need to serve the files from a local web server. This is required for the Progressive Web App (PWA) features to work correctly.
 
-1.  Clone this repository or download the files.
-2.  Open the `index.html` file in your favorite web browser.
-
-That's it!
+1.  Clone this repository.
+2.  Navigate to the project directory in your terminal.
+3.  Run the following command (requires Node.js and npx):
+    ```shell
+    npx serve
+    ```
+4.  Open the URL provided by the server (usually `http://localhost:3000`) in a modern browser like Chrome.
