@@ -10,27 +10,7 @@ body {
     font-family: 'Consolas', 'Courier New', monospace;
     background-color: #1e1e1e;
     color: #d4d4d4;
-    padding: 20px;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-h1 {
-    color: #d4d4d4;
-    display: inline-block;
-}
-
-h1::after {
-    content: '_';
-    animation: blink 1s step-end infinite;
-    font-weight: bold;
-}
-
-@keyframes blink {
-    50% { opacity: 0; }
+    padding: 0px;
 }
 
 h2 {
@@ -39,7 +19,12 @@ h2 {
     padding-bottom: 10px;
     margin-bottom: 20px;
     font-weight: normal;
-    font-size: 1.2em;
+    font-size: 1.0em;
+}
+
+h3 {
+    font-size: 0.9em;
+    font-weight: normal;
 }
 
 main {
@@ -47,7 +32,7 @@ main {
     margin: 0 auto;
     background: #1e1e1e;
     padding: 20px;
-    border: 1px solid #333;
+    border: 0;
 }
 
 #add-todo, #open-todos, #completed-log {
@@ -66,7 +51,7 @@ main {
     color: #d4d4d4;
     padding: 10px;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 #todo-input:focus {
@@ -77,10 +62,10 @@ button {
     border: 1px solid #333;
     background-color: #252526;
     color: #d4d4d4;
-    padding: 10px 20px;
+    padding: 5px 10px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.8em;
 }
 
 button:hover {
@@ -108,6 +93,7 @@ li, .log-item {
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid #333;
+    font-size: 0.8em;
 }
 
 li:last-child {
@@ -141,7 +127,7 @@ li button:hover {
 .log-item {
     background-color: transparent;
     margin-bottom: 0;
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #8c8c8c; /* Dim completed items */
 }
 
