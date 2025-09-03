@@ -1,14 +1,15 @@
-/* Basic Reset */
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Dark+ Theme */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Consolas', 'Courier New', monospace;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
     padding: 20px;
 }
 
@@ -18,23 +19,35 @@ header {
 }
 
 h1 {
-    color: #4a4a4a;
+    color: #d4d4d4;
+    display: inline-block;
+}
+
+h1::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
 }
 
 h2 {
-    color: #4a4a4a;
-    border-bottom: 2px solid #ddd;
+    color: #d4d4d4;
+    border-bottom: 1px solid #333;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    font-weight: normal;
+    font-size: 1.2em;
 }
 
 main {
     max-width: 800px;
     margin: 0 auto;
-    background: #fff;
+    background: #1e1e1e;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #333;
 }
 
 #add-todo, #open-todos, #completed-log {
@@ -48,83 +61,100 @@ main {
 
 #todo-input {
     flex-grow: 1;
+    background-color: #252526;
+    border: 1px solid #333;
+    color: #d4d4d4;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+#todo-input:focus {
+    outline: 1px solid #007acc;
 }
 
 button {
+    border: 1px solid #333;
+    background-color: #252526;
+    color: #d4d4d4;
     padding: 10px 20px;
-    border: none;
-    background-color: #5c67f2;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
     cursor: pointer;
+    font-family: inherit;
+    font-size: 1em;
 }
 
 button:hover {
-    background-color: #4a54e1;
+    background-color: #333;
+}
+
+#todo-form button {
+    background-color: transparent;
+    border: 1px solid #007acc;
+    color: #007acc;
+}
+
+#todo-form button:hover {
+    background-color: #007acc;
+    color: #fff;
 }
 
 ul {
     list-style: none;
 }
 
-li {
+li, .log-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #333;
 }
 
 li:last-child {
     border-bottom: none;
 }
 
-li button {
+li button, .log-item button {
     background: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    border-radius: 0;
+}
+
+li button {
     border: 1px solid #28a745;
     color: #28a745;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 4px;
 }
 
 li button:hover {
     background: #28a745;
-    color: white;
+    color: #fff;
 }
 
 .log-group h3 {
     margin-top: 20px;
     margin-bottom: 10px;
     color: #6c757d;
+    font-weight: bold;
 }
 
 .log-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    font-size: 14px;
+    background-color: transparent;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    color: #8c8c8c; /* Dim completed items */
+}
+
+.log-item span {
+    text-decoration: line-through;
 }
 
 .log-item button.undo-button {
-    background: none;
     border: 1px solid #ffc107;
     color: #ffc107;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 4px;
 }
 
 .log-item button.undo-button:hover {
     background: #ffc107;
-    color: #333;
+    color: #1e1e1e;
 }
