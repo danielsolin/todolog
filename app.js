@@ -119,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.tagName === 'BUTTON') {
 
-            const index = e.target.dataset.index;
             // Find the corresponding open todo
+            const index = e.target.dataset.index;
             const openTodos = todos.filter(todo => !todo.completed);
             const todoToComplete = openTodos[index];
             
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 todoToUndo.completed = null;
                 saveTodos();
                 renderTodos();
-                
+
             }
 
         } else if (target.classList.contains('delete-button')) {
