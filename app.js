@@ -29,9 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
         openTodos.forEach((todo, index) => {
 
             const li = document.createElement('li');
+            li.setAttribute('data-index', index);
             li.innerHTML = `
-                <span>${todo.text}</span>
-                <button data-index="${index}">Complete</button>
+                <div class="todo-item-main">
+                    <span>${todo.text}</span>
+                </div>
+                <button>Complete</button>
             `;
 
             todoList.appendChild(li);
@@ -75,7 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('log-item');
                     itemDiv.innerHTML = `
-                        <span>${todo.text}</span>
+                        <div class="todo-item-main">
+                            <span>${todo.text}</span>
+                        </div>
                         <div class="log-item-buttons">
                             <button class="undo-button"
                                 data-created="${todo.created}">Undo</button>
@@ -119,12 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.tagName === 'BUTTON') {
 
-            // Find the corresponding open todo
-            const index = e.target.dataset.index;
+            const li = e.target.closest('li');
+            const index = li.dataset.index;
             const openTodos = todos.filter(todo => !todo.completed);
             const todoToComplete = openTodos[index];
             
-            // Find the original todo in the main array to modify it
             const originalTodo = todos.find(t => t === todoToComplete);
             if (originalTodo) {
 
@@ -136,6 +140,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
+    });
+
+    todoList.addEventListener('dblclick', (e) => {
+
+        if (e.target.tagName === 'SPAN') {
+
+            const li = e.target.closest('li');
+            if (li.classList.contains('editing')) return;
+            li.classList.add('editing');
+
+            const index = li.dataset.index;
+            const openTodos = todos.filter(todo => !todo.completed);
+            const todoToEdit = openTodos[index];
+
+            const span = e.target;
+            const button = li.querySelector('button');
+            span.style.display = 'none';
+            button.style.display = 'none';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = todoToEdit.text;
+            input.classList.add('edit-input');
+            li.prepend(input);
+            input.focus();
+
+            const cleanup = () => {
+                input.remove();
+                span.style.display = '';
+                button.style.display = '';
+                li.classList.remove('editing');
+            };
+
+            const saveEdit = () => {
+                const newText = input.value.trim();
+                if (newText) {
+                    todoToEdit.text = newText;
+                    span.textContent = newText;
+                    saveTodos();
+                }
+                cleanup();
+            };
+
+            input.addEventListener('blur', saveEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    cleanup();
+                }
+            });
+        }
     });
 
     // Handle undoing and deleting todos

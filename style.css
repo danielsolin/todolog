@@ -96,16 +96,21 @@ li, .log-item {
     font-size: 0.8em;
 }
 
-#todo-list li::before, .log-item::before {
+.todo-item-main {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-main::before {
     content: '>';
     margin-right: 10px;
 }
 
-#todo-list li::before {
+#open-todos .todo-item-main::before {
     color: #007acc;
 }
 
-.log-item::before {
+.log-item .todo-item-main::before {
     color: #28a745;
 }
 
@@ -171,4 +176,14 @@ li button:hover {
 .log-item button.delete-button:hover {
     background: #f44747;
     color: #fff;
+}
+
+.edit-input {
+    background-color: #252526;
+    border: 1px solid #007acc;
+    color: #d4d4d4;
+    font-family: inherit;
+    font-size: 1em;
+    padding: 0;
+    width: 100%;
 }
