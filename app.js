@@ -167,31 +167,41 @@ document.addEventListener('DOMContentLoaded', () => {
             input.focus();
 
             const cleanup = () => {
+
                 input.remove();
                 span.style.display = '';
                 button.style.display = '';
                 li.classList.remove('editing');
+
             };
 
             const saveEdit = () => {
+
                 const newText = input.value.trim();
                 if (newText) {
+
                     todoToEdit.text = newText;
                     span.textContent = newText;
                     saveTodos();
+
                 }
+
                 cleanup();
             };
 
             input.addEventListener('blur', saveEdit);
             input.addEventListener('keydown', (e) => {
+
                 if (e.key === 'Enter') {
                     saveEdit();
                 } else if (e.key === 'Escape') {
                     cleanup();
                 }
+
             });
+
         }
+
     });
 
     // Handle undoing and deleting todos
