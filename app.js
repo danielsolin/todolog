@@ -148,9 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const todoToUndo = todos.find(t => t.created === todoCreated);
             if (todoToUndo) {
+
                 todoToUndo.completed = null;
                 saveTodos();
                 renderTodos();
+                
             }
 
         } else if (target.classList.contains('delete-button')) {
