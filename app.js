@@ -77,8 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     itemDiv.innerHTML = `
                         <span>${todo.text}</span>
                         <div class="log-item-buttons">
-                            <button class="undo-button" data-created="${todo.created}">Undo</button>
-                            <button class="delete-button" data-created="${todo.created}">Delete</button>
+                            <button class="undo-button"
+                                data-created="${todo.created}">Undo</button>
+                            <button class="delete-button"
+                                data-created="${todo.created}">Delete</button>
                         </div>
                     `;
                     groupDiv.appendChild(itemDiv);
@@ -138,26 +140,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle undoing and deleting todos
     logContainer.addEventListener('click', (e) => {
+
         const target = e.target;
         const todoCreated = target.dataset.created;
 
         if (target.classList.contains('undo-button')) {
+
             const todoToUndo = todos.find(t => t.created === todoCreated);
             if (todoToUndo) {
                 todoToUndo.completed = null;
                 saveTodos();
                 renderTodos();
             }
+
         } else if (target.classList.contains('delete-button')) {
-            const prompt = 'Are you sure you want to permanently delete this item?';
+
+            const prompt = 'Are you sure?';
             if (confirm(prompt)) {
+
                 const todoIndex = todos.findIndex(t => t.created === todoCreated);
                 if (todoIndex > -1) {
+
                     todos.splice(todoIndex, 1);
                     saveTodos();
+                    
                     renderTodos();
+
                 }
             }
+
         }
     });
 
