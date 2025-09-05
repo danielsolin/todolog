@@ -26,17 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const completedTodos = todos.filter(todo => todo.completed);
 
         // Render open todos
-        openTodos.forEach((todo, index) => {
+        openTodos.forEach(todo => {
 
             const li = document.createElement('li');
-            li.setAttribute('data-index', index);
-            li.innerHTML = `
-                <div class="todo-item-main">
-                    <span>${todo.text}</span>
-                </div>
-                <button>Complete</button>
-            `;
+            li.setAttribute('data-created', todo.created);
 
+            const mainDiv = document.createElement('div');
+            mainDiv.className = 'todo-item-main';
+
+            const span = document.createElement('span');
+            span.textContent = todo.text;
+            mainDiv.appendChild(span);
+
+            const completeButton = document.createElement('button');
+            completeButton.textContent = 'Complete';
+
+            li.appendChild(mainDiv);
+            li.appendChild(completeButton);
             todoList.appendChild(li);
 
         });
@@ -51,9 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const date = `${year}-${month}-${day}`;
 
             if (!acc[date]) {
-
                 acc[date] = [];
-
             }
             acc[date].push(todo);
 
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const groupDiv = document.createElement('div');
                 groupDiv.classList.add('log-group');
-                
+
                 const heading = document.createElement('h3');
                 heading.textContent = date;
                 groupDiv.appendChild(heading);
@@ -77,24 +81,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('log-item');
-                    itemDiv.innerHTML = `
-                        <div class="todo-item-main">
-                            <span>${todo.text}</span>
-                        </div>
-                        <div class="log-item-buttons">
-                            <button class="undo-button"
-                                data-created="${todo.created}">Undo</button>
-                            <button class="delete-button"
-                                data-created="${todo.created}">Delete</button>
-                        </div>
-                    `;
+
+                    const mainDiv = document.createElement('div');
+                    mainDiv.className = 'todo-item-main';
+
+                    const span = document.createElement('span');
+                    span.textContent = todo.text;
+                    mainDiv.appendChild(span);
+
+                    const buttonsDiv = document.createElement('div');
+                    buttonsDiv.className = 'log-item-buttons';
+
+                    const undoButton = document.createElement('button');
+                    undoButton.className = 'undo-button';
+                    undoButton.textContent = 'Undo';
+                    undoButton.dataset.created = todo.created;
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-button';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.dataset.created = todo.created;
+
+                    buttonsDiv.appendChild(undoButton);
+                    buttonsDiv.appendChild(deleteButton);
+
+                    itemDiv.appendChild(mainDiv);
+                    itemDiv.appendChild(buttonsDiv);
                     groupDiv.appendChild(itemDiv);
 
                 });
 
                 logContainer.appendChild(groupDiv);
 
-        });
+            });
     };
 
     // Handle adding new todos
@@ -125,19 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.tagName === 'BUTTON') {
 
             const li = e.target.closest('li');
-            const index = li.dataset.index;
-            const openTodos = todos.filter(todo => !todo.completed);
-            const todoToComplete = openTodos[index];
-            
-            const originalTodo = todos.find(t => t === todoToComplete);
-            if (originalTodo) {
+            const todoCreated = li.dataset.created;
+            const todoToComplete = todos.find(t => t.created === todoCreated);
 
-                originalTodo.completed = new Date();
+            if (todoToComplete) {
+                todoToComplete.completed = new Date();
                 saveTodos();
                 renderTodos();
-
             }
-
         }
 
     });
@@ -148,11 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const li = e.target.closest('li');
             if (li.classList.contains('editing')) return;
-            li.classList.add('editing');
 
-            const index = li.dataset.index;
-            const openTodos = todos.filter(todo => !todo.completed);
-            const todoToEdit = openTodos[index];
+            const todoCreated = li.dataset.created;
+            const todoToEdit = todos.find(t => t.created === todoCreated);
+            if (!todoToEdit) return;
+
+            li.classList.add('editing');
 
             const span = e.target;
             const button = li.querySelector('button');
@@ -167,41 +182,34 @@ document.addEventListener('DOMContentLoaded', () => {
             input.focus();
 
             const cleanup = () => {
-
                 input.remove();
                 span.style.display = '';
                 button.style.display = '';
                 li.classList.remove('editing');
-
             };
 
             const saveEdit = () => {
-
                 const newText = input.value.trim();
                 if (newText) {
-
                     todoToEdit.text = newText;
-                    span.textContent = newText;
                     saveTodos();
-
+                    renderTodos(); // Re-render for consistency
+                } else {
+                    cleanup(); // Or just cleanup if the new text is empty
                 }
-
-                cleanup();
             };
 
             input.addEventListener('blur', saveEdit);
             input.addEventListener('keydown', (e) => {
-
                 if (e.key === 'Enter') {
                     saveEdit();
                 } else if (e.key === 'Escape') {
                     cleanup();
                 }
-
             });
 
         }
-
+        
     });
 
     // Handle undoing and deleting todos
