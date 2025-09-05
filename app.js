@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
         }
-        
+
     });
 
     // Handle undoing and deleting todos
@@ -220,7 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (target.classList.contains('undo-button')) {
 
-            const todoToUndo = todos.find(t => t.created === todoCreated);
+            const todoToUndo = todos.find(
+                t => t.created === todoCreated
+            );
             if (todoToUndo) {
 
                 todoToUndo.completed = null;
@@ -234,7 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const prompt = 'Are you sure?';
             if (confirm(prompt)) {
 
-                const todoIndex = todos.findIndex(t => t.created === todoCreated);
+                const todoIndex = todos.findIndex(
+                    t => t.created === todoCreated
+                );
+
                 if (todoIndex > -1) {
 
                     todos.splice(todoIndex, 1);
